@@ -1,8 +1,8 @@
 const mongoose = require("mongoose");
 const Schema = mongoose.Schema;
 const { ObjectId } = mongoose.Schema;
-const CartItemSchema = './cart'
-const Cart = require("../models/cart");
+const CartItemSchema = require('./cart')
+
 
 // const CartItemSchema = new mongoose.Schema(
 //   {
@@ -13,16 +13,14 @@ const Cart = require("../models/cart");
 //   },
 //   { timestamps: true }
 // );
-// const CartItem = mongoose.model("CartItem", CartItemSchema);
+const CartItem = new CartItemSchema;
 const OrderSchema = new mongoose.Schema(
   {
-    products: [CartItemSchema],
-     
+    products: CartItem.products,
     transaction_id: {},
-    
     amount: { type: Number },
     address: String,
-    
+
     status: {
       type: String,
       default: "Not processed",

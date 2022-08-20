@@ -120,8 +120,8 @@ exports.update = (req, res) => {
 };
 
 exports.list = (req, res) => {
-    let order = req.query.order ? req.query.order : "asc";
-    let sortBy = req.query.sortBy ? req.query.sortBy : "_id";
+    let order = req.query.order ? req.query.order : "desc";
+    let sortBy = req.query.sortBy ? req.query.sortBy : "createdAt";
     let limit = req.query.limit ? (req.query.limit) : "6";
   
     Product.find()

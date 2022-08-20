@@ -1,12 +1,17 @@
-const {Order} = require("../models/order");
+const { Order } = require("../models/order");
+const Cart = require("../models/cart");
 const { errorHandler } = require("../helper/dbErrorHandler");
+const { orderBy } = require("lodash");
 
-exports.create = (req, res) => {
+
+
+exports.create = async (req, res) => {
     req.params.user = req.profile
-    const order = new Order(req.body.order)
-    console.log("or", order)
-    order.save((error, data) =>{
-        if(error){
+    let userId = req.params.userId;
+    let cart = await Cart.findOne({ userId });
+    let order = new Order(req.body)
+    order.save((error, data) => {
+        if (error) {
             return res.status(400).json({
                 error: errorHandler(error)
             });
@@ -15,12 +20,14 @@ exports.create = (req, res) => {
     });
 };
 
-exports.listOrders = (req,res) => {
+
+
+exports.listOrders = (req, res) => {
     Order.find()
-        .populate('user','_id name address')
+        .populate('user', '_id name address')
         .sort('-created')
-        .exec((err,orders) => {
-            if(err){
+        .exec((err, orders) => {
+            if (err) {
                 return res.status(400).json({
                     error: errorHandler(error)
                 });

@@ -8,14 +8,12 @@ const CartItemsSchema = new mongoose.Schema(
         },
         products: [
             {
-                product: String,
+                product: { type: String, ref: 'Product' },
                 count: Number,
                 name: String,
                 price: Number,
                 totalAmount: Number
             },
-
-
         ],
         grandTotal: {
             type: Number,
